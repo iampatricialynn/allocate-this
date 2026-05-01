@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Allocate this!</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --black: #0B0B0B; 
+  --white: #F7F5F2;
+  --mid: #8C8C8C;
+  --border: #2A2A2A;
+  --red: #C8102E;      /* Coca‑Cola Red */
+  --amber: #F5A623;
+  --green: #2AE87A;
+
+  --font-display: 'Bebas Neue', sans-serif;
+  --font-body: 'DM Sans', sans-serif;
+  --font-mono: 'DM Mono', monospace;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  background: var(--black);
+  color: var(--white);
+  font-family: var(--font-body);
+  overflow: hidden;
+}
+
+#deck { width: 100vw; height: 100vh; position: relative; }
+
+.slide {
+  position: absolute; inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 8vh 8vw;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(30px);
+  transition: opacity .6s cubic-bezier(.4,0,.2,1),
+              transform .6s cubic-bezier(.4,0,.2,1);
+}
+
+.slide.active {
+  opacity: 1;
+  pointer-events: all;
+  transform: translateY(0);
+}
+
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--red);
+  margin-bottom: 28px;
+}
+
+/* ───────── SLIDE 1 — HOOK ───────── */
+
+#s-hook h1 {
+  font-family: var(--font-display);
+  font-size: clamp(72px, 13vw, 180px);
+  line-height: 0.9;
+  margin-bottom: 36px;
+}
+
+.strike {
+  position: relative;
+  color: var(--mid);
+}
+
+.strike::after {
+  content: '';
+  position: absolute;
+  left: -3%;
+  right: -3%;
+  top: 52%;
+  height: 7px;
+  background: var(--red);
+  transform: rotate(-2deg);
+}
+
+.sub {
+  font-size: 26px;
+  max-width: 820px;
+  line-height: 1.45;
+  color: var(--mid);
+}
+
+.sub em { color: var(--white); font-style: normal; font-weight: 500; }
+
+/* ───────── SLIDE 2 — CONTEXT ───────── */
+
+.big {
+  font-family: var(--font-display);
+  font-size: clamp(64px, 10vw, 150px);
+  line-height: 0.92;
+  margin-bottom: 28px;
+}
+
+.mid {
+  font-size: clamp(22px, 2.5vw, 32px);
+  color: var(--mid);
+  max-width: 900px;
+  line-height: 1.45;
+}
+
+.mid em { color: var(--white); font-weight: 500; }
+
+/* ───────── SLIDE 3 — THE APP ───────── */
+
+.caption {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--mid);
+  margin-bottom: 20px;
+}
+
+.caption span { color: var(--red); }
+
+.shot {
+  flex: 1;
+  width: 100%;
+  background: #111;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.placeholder {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--mid);
+  letter-spacing: 3px;
+  text-align: center;
+}
+
+/* ───────── SLIDE 4 — DECISION ───────── */
+
+.headline {
+  font-family: var(--font-display);
+  font-size: clamp(56px, 9vw, 130px);
+  line-height: 0.9;
+  margin-bottom: 40px;
+}
+
+.three-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  max-width: 1400px;
+}
+
+.card {
+  background: #141414;
+  border: 1px solid var(--border);
+  border-top: 4px solid var(--red);
+  padding: 22px;
+}
+
+.card-num {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 3px;
+  color: var(--mid);
+}
+
+.card-head {
+  font-family: var(--font-display);
+  font-size: 32px;
+  margin: 12px 0;
+}
+
+.card-body {
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--mid);
+}
+
+.card-body em { color: var(--white); font-weight: 500; }
+
+/* ───────── NAV ───────── */
+
+#nav {
+  position: fixed;
+  bottom: 3vh;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 10px;
+}
+
+.nav-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--border);
+  cursor: pointer;
+}
+
+.nav-dot.active { background: var(--red); transform: scale(1.4); }
+
+.slide-num {
+  position: fixed;
+  bottom: 3vh;
+  right: 4vw;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--mid);
+}
+</style>
+</head>
+
+<body>
+
+<div id="deck">
+
+<!-- SLIDE 1 -->
+<div class="slide active" id="s-hook">
+  <div class="eyebrow">Key Decision · Supply Allocation</div>
+  <h1>WHO GETS<br><span class="strike">THE</span> how much SUPPLY?</h1>
+  <div class="sub">
+    Production is down. Demand isn’t.<br>
+    <em>One decision: make the month <br>
+	or lose a customer.</em>
+  </div>
+</div>
+
+<!-- SLIDE 2 -->
+<div class="slide">
+  <div class="eyebrow">The reality</div>
+  <div class="big">68%<br>SUPPLY.</div>
+  <div class="mid">
+    No production for the week.<br>
+    500 customers. 300 SKUs.<br><br>
+    The business must decide not just <em>who</em> to supply —
+    but <em>how much</em>.
+  </div>
+</div>
+
+<!-- SLIDE 3 -->
+<div class="slide">
+  <div class="caption">The tool <span>Allocate this!</span> · Built in Lyric Studio</div>
+  <div class="shot">
+    <div class="placeholder">
+      <img src="allocate_this_app.png" alt="Allocate this app screenshot">
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 4 -->
+<div class="slide">
+  <div class="eyebrow">Strategy, not execution</div>
+  <div class="headline">
+    SUPPLY ALLOCATION<br>IS A STRATEGY.
+  </div>
+
+  <div class="three-grid">
+    <div class="card">
+      <div class="card-num">01 · STRATEGY</div>
+      <div class="card-head">PRIORITY ALLOCATION</div>
+      <div class="card-body">
+        Protect key customers first — even if others receive nothing.
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-num">02 · STRATEGY</div>
+      <div class="card-head">FAIRSHARE HYBRID ALLOCATION</div>
+      <div class="card-body">
+        Share pain across customers while still <em>prioritizing the critical few</em>.
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-num">03 · OUTCOME</div>
+      <div class="card-head">CAKE & EAT IT TOO</div>
+      <div class="card-body">
+        Side-by-side comparison — <em>in less than a minute</em>.
+      </div>
+    </div>
+  </div>
+</div>
+
+</div>
+
+<div id="nav"></div>
+<div class="slide-num" id="slide-num">01 / 04</div>
+
+<script>
+const slides = [...document.querySelectorAll('.slide')];
+const nav = document.getElementById('nav');
+const slideNum = document.getElementById('slide-num');
+let current = 0;
+
+slides.forEach((_, i) => {
+  const d = document.createElement('div');
+  d.className = 'nav-dot' + (i === 0 ? ' active' : '');
+  d.onclick = () => go(i);
+  nav.appendChild(d);
+});
+
+function go(n) {
+  if (n < 0 || n >= slides.length) return;
+  slides[current].classList.remove('active');
+  current = n;
+  slides[current].classList.add('active');
+  document.querySelectorAll('.nav-dot')
+    .forEach((d,i)=>d.classList.toggle('active',i===current));
+  slideNum.textContent =
+    String(current+1).padStart(2,'0')+' / '+String(slides.length).padStart(2,'0');
+}
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'ArrowRight' || e.key === ' ') go(current+1);
+  if (e.key === 'ArrowLeft') go(current-1);
+});
+</script>
+
+</body>
+</html>
