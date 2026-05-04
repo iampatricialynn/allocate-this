@@ -64,6 +64,36 @@ html, body {
   margin-bottom: 28px;
 }
 
+
+.floating-video {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+
+  width: 320px;
+  aspect-ratio: 16 / 9;
+  z-index: 9999;
+
+  background: #000;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35);
+}
+
+.floating-video iframe {
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+/* Mobile optimization */
+@media (max-width: 768px) {
+  .floating-video {
+    width: 220px;
+    right: 12px;
+    bottom: 12px;
+  }
+}
 	
 
 /* ───────── SLIDE 1 — HOOK ───────── */
@@ -242,6 +272,7 @@ html, body {
   </div>
 </div>
 
+	
 
 <!-- SLIDE 2 -->
 <div class="slide">
@@ -299,6 +330,12 @@ html, body {
   </div>
 </div>
 
+<div class="floating-video">
+  https://player.vimeo.com/video/VIDEO_ID?badge=0&autopause=1&player_id=0&app_id=1189191555
+  </iframe>
+</div>
+
+	
 </div>
 
 <div id="nav"></div>
