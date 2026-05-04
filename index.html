@@ -64,6 +64,39 @@ html, body {
   margin-bottom: 28px;
 }
 
+	
+.floating-video {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  width: 320px;
+  aspect-ratio: 16 / 9;
+  z-index: 9999;
+
+  background: #000;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.35);
+}
+
+/* Make sure the video fills the container */
+.floating-video iframe,
+.floating-video video {
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+/* Mobile-friendly resize */
+@media (max-width: 768px) {
+  .floating-video {
+    width: 220px;
+    right: 12px;
+    bottom: 12px;
+  }
+}
+
+
 /* ───────── SLIDE 1 — HOOK ───────── */
 
 #s-hook h1 {
@@ -228,6 +261,17 @@ html, body {
 
 <div id="deck">
 
+	
+<div class="floating-video">
+  <video
+    src="demo.mp4"
+    controls
+    muted
+    playsinline
+  ></video>
+</div>
+
+
 <!-- SLIDE 1 -->
 <div class="slide active" id="s-hook">
   <div class="eyebrow">Key Decision · Supply Allocation</div>
@@ -238,6 +282,7 @@ html, body {
 	or lose a customer.</em>
   </div>
 </div>
+
 
 <!-- SLIDE 2 -->
 <div class="slide">
